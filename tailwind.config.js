@@ -1,9 +1,8 @@
+// tailwind.config.js
 module.exports = {
-  purge: [],
-  darkMode: false, // or 'media' or 'class'
+  content: ['./src/**/*.{js,jsx,ts,tsx}'],  // 確保掃描到 index.js、App.jsx、pages 裡的 jsx
   theme: {
     extend: {},
   },
-  variants: {},
   plugins: [],
-}
+};
