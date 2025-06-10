@@ -1,24 +1,46 @@
+// src/pages/Login.jsx
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate }      from 'react-router-dom';
 
-export default function Login() {
+export default function Login({ onLogin }) {
   const [user, setUser] = useState('');
-  const [pwd, setPwd] = useState('');
+  const [pwd,  setPwd ] = useState('');
   const navigate = useNavigate();
 
-  const submit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // 模擬驗證
-    if (user === 'student' && pwd === 'password') {
+
+    try {
+      // 发请求到本地 Express（或生产时的 /api/login）
+      const res = await fetch('http://localhost:4000/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: user.trim(), password: pwd }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        // 后端返回 401 或 400 时，会在 data.error 里
+        throw new Error(data.error || '登入失敗');
+      }
+
+      // 拿到 token 存储
+      localStorage.setItem('authToken', data.token);
+      // 通知父组件更新登录状态
+      if (onLogin) onLogin(data.token);
+      // 跳转到首页
       navigate('/');
-    } else {
-      alert('帳密錯誤');
+    } catch (err) {
+      // 调试看请求和响应
+      console.error('[Login] error:', err);
+      alert(err.message);
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-blue-50 p-4">
-      <form onSubmit={submit} className="w-full max-w-sm bg-white p-6 rounded shadow">
+      <form onSubmit={handleSubmit} className="w-full max-w-sm bg-white p-6 rounded shadow">
         <h1 className="text-2xl font-semibold mb-4 text-center">校務系統登入</h1>
         <input
           type="text"
@@ -36,7 +58,7 @@ export default function Login() {
           className="w-full mb-4 px-3 py-2 border rounded focus:outline-none focus:ring"
           required
         />
-        <button className="w-full bg-blue-700 text-white py-2 rounded hover:bg-blue-800">
+        <button type="submit" className="w-full bg-blue-700 text-white py-2 rounded hover:bg-blue-800">
           登入
         </button>
       </form>

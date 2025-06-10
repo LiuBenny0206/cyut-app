@@ -1,5 +1,6 @@
 // server.js
 const express    = require('express');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 
 // 直接复用你的 api/login.js 逻辑（已改成 CommonJS 导出）
@@ -8,6 +9,7 @@ const loginHandler = require('./api/login');
 const app = express();
 
 // 解析 JSON body
+app.use(cors());
 app.use(bodyParser.json());
 
 // 1 个路由： POST /api/login
