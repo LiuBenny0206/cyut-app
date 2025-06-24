@@ -1,0 +1,99 @@
+/* src/pages/StudentCard.css */
+
+.student-card-page {
+  background: #f3f6fb;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.student-card-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px;
+}
+
+/* 卡片白背景 + 圆角阴影 */
+.card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  padding: 24px;
+  max-width: 360px;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+/* Logo 放大 */
+.card-logo {
+  width: 420px;       /* 原来 80px，改为 120px */
+  margin: 0 auto 12px;/* 底部间距也稍微加大 */
+}
+
+.card-title {
+  font-size: 20px;
+  color: #b5a47b;
+  margin-bottom: 16px;
+}
+
+/* 照片框 */
+.photo-frame {
+  width: 160px;
+  height: 200px;
+  margin: 0 auto 16px;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #e6e6e6;
+}
+.student-photo {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+/* 文字信息 */
+.card-info p {
+  margin: 4px 0;
+  font-size: 14px;
+  color: #333;
+}
+.student-name {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+.student-id,
+.student-idno,
+.student-dept {
+  color: #555;
+}
+
+/* 條碼：居中对齐 */
+.barcode-frame {
+  margin-top: 16px;
+  display: flex;
+  justify-content: center;  /* 居中 */
+  align-items: center;
+  flex-direction: column;
+}
+.barcode-img {
+  width: 100%;
+  max-width: 260px;
+  margin-bottom: 4px;
+}
+.barcode-note {
+  font-size: 12px;
+  color: #777;
+}
+
+/* 底部注意 */
+.card-footer-note {
+  font-size: 12px;
+  color: #666;
+  max-width: 360px;
+  text-align: center;
+  line-height: 1.4;
+}

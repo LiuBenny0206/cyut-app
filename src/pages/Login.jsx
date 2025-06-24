@@ -9,30 +9,33 @@ export default function Login({ onLogin }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      // 发请求到本地 Express（或生产时的 /api/login）
-      const res = await fetch('http://localhost:4000/api/login', {
-        method: 'POST',
+      const API = process.env.NODE_ENV === 'development'
+        ? 'http://localhost:4000'
+        : '';
+
+      const res = await fetch(`${API}/api/login`, {
+        method:  'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username: user.trim(), password: pwd }),
+        body:    JSON.stringify({ username: user.trim(), password: pwd }),
       });
-
       const data = await res.json();
+      if (!res.ok) throw new Error(data.error || '登入失敗');
 
-      if (!res.ok) {
-        // 后端返回 401 或 400 时，会在 data.error 里
-        throw new Error(data.error || '登入失敗');
-      }
+      // 存 token、真名、身分證字號、校內學號、photo URL
+      localStorage.setItem('authToken',    data.token);
+      localStorage.setItem('authUser',     data.name);
+      localStorage.setItem('authIdNo',     data.idNo);
+      localStorage.setItem('authSchoolId', data.schoolId);
+      localStorage.setItem('authPhoto',    data.photo);
 
-      // 拿到 token 存储
-      localStorage.setItem('authToken', data.token);
-      // 通知父组件更新登录状态
-      if (onLogin) onLogin(data.token);
-      // 跳转到首页
+      // 通知父組件 更新 state
+      // （请确保 App.jsx 的 handleLogin 也接收并处理 photo）
+      onLogin?.(data.token, data.name, data.idNo, data.schoolId, data.photo);
+
+      // 跳去首頁
       navigate('/');
     } catch (err) {
-      // 调试看请求和响应
       console.error('[Login] error:', err);
       alert(err.message);
     }
