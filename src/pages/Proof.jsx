@@ -12,7 +12,7 @@ export default function Proof({ userName: propName, studentId: propId }) {
   const idNo      = localStorage.getItem('authIdNo')   || '';
 
   const baseRecords = [
-    { year: '113', semester: '2', dept: '應英系', class: '應英系四日—A', status: '目前仍在學' },
+    { year: '114', semester: '1', dept: '應英系', class: '應英系四日—A', status: '目前仍在學' },
   ];
   const records = baseRecords.map(r => {
     const suffix = studentId.slice(-2);
