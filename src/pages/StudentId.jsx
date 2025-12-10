@@ -7,8 +7,10 @@ import logoImg    from '../assets/images/cyut-logo-words.jpg';       // 校徽 l
 import barcodeImg from '../assets/images/barcode-placeholder.jpg';   // 條碼占位圖
 import './StudentId.css';
 
-export default function StudentCard({ userName = '', idNo = '', studentId = '' }) {
+export default function StudentCard({ userName = '', idNo = '', studentId = '', photo = '', onLogout }) {
   const navigate = useNavigate();
+
+  const photoUrl = photo || localStorage.getItem('authPhoto') || '/student-photo-placeholder.png';
 
   return (
     <div className="student-card-page">
@@ -17,6 +19,7 @@ export default function StudentCard({ userName = '', idNo = '', studentId = '' }
         title="朝陽科技大學校園系統"
         userName={userName}
         studentId={studentId}
+        onLogout={onLogout}
       />
 
       <main className="student-card-container">
@@ -30,8 +33,7 @@ export default function StudentCard({ userName = '', idNo = '', studentId = '' }
           {/* 大頭照 */}
           <div className="photo-frame">
             <img
-              // 這裡從 localStorage 拿 url（Login 成功時存入 authPhoto）
-              src={localStorage.getItem('authPhoto') || '/student-photo-placeholder.png'}
+              src={photoUrl}
               alt="學生照片"
               className="student-photo"
             />

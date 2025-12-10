@@ -7,8 +7,16 @@ export default function Header({
   title     = '朝陽科技大學校園系統',
   userName  = '',
   studentId = '',
+  onLogout,
 }) {
   const navigate = useNavigate();
+
+  const handleLogout = () => {
+    if (onLogout) {
+      onLogout();
+      navigate('/login');
+    }
+  };
 
   return (
     <header className="bg-blue-800 text-white flex items-center justify-between px-4 h-12">
@@ -26,6 +34,14 @@ export default function Header({
           >
             <img src={idCardIcon} alt="學生證" className="w-6 h-6" />
           </button>
+          {onLogout && (
+            <button
+              onClick={handleLogout}
+              className="text-sm bg-white/10 border border-white/30 rounded px-2 py-1 hover:bg-white/20"
+            >
+              登出
+            </button>
+          )}
         </div>
       )}
     </header>

@@ -14,6 +14,7 @@ export default function App() {
   const [userName,  setUserName]  = useState('');
   const [idNo,      setIdNo]      = useState('');
   const [studentId, setStudentId] = useState('');
+  const [photo,     setPhoto]     = useState('');
 
   // 2. 组件加载时，从 localStorage 读取
   useEffect(() => {
@@ -21,25 +22,43 @@ export default function App() {
     const u = localStorage.getItem('authUser')     || '';
     const i = localStorage.getItem('authIdNo')     || '';
     const s = localStorage.getItem('authSchoolId') || '';
+    const p = localStorage.getItem('authPhoto')    || '';
     if (t) {
       setToken(t);
       setUserName(u);
       setIdNo(i);
       setStudentId(s);
+      setPhoto(p);
     }
   }, []);
 
   // 3. 登录成功后将调用此函数，更新 state & localStorage
-  const handleLogin = (newToken, newName, newIdNo, newSchoolId) => {
+  const handleLogin = (newToken, newName, newIdNo, newSchoolId, newPhoto = '') => {
     localStorage.setItem('authToken',    newToken);
     localStorage.setItem('authUser',     newName);
     localStorage.setItem('authIdNo',     newIdNo);
     localStorage.setItem('authSchoolId', newSchoolId);
+    localStorage.setItem('authPhoto',    newPhoto);
 
     setToken(newToken);
     setUserName(newName);
     setIdNo(newIdNo);
     setStudentId(newSchoolId);
+    setPhoto(newPhoto);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('authUser');
+    localStorage.removeItem('authIdNo');
+    localStorage.removeItem('authSchoolId');
+    localStorage.removeItem('authPhoto');
+
+    setToken(null);
+    setUserName('');
+    setIdNo('');
+    setStudentId('');
+    setPhoto('');
   };
 
   return (
@@ -50,7 +69,11 @@ export default function App() {
           path="/"
           element={
             token
-              ? <Home userName={userName} studentId={studentId} />
+              ? <Home
+                  userName={userName}
+                  studentId={studentId}
+                  onLogout={handleLogout}
+                />
               : <Navigate to="/login" replace />
           }
         />
@@ -60,7 +83,11 @@ export default function App() {
           path="/proof"
           element={
             token
-              ? <Proof userName={userName} studentId={studentId} />
+              ? <Proof
+                  userName={userName}
+                  studentId={studentId}
+                  onLogout={handleLogout}
+                />
               : <Navigate to="/login" replace />
           }
         />
@@ -90,6 +117,8 @@ export default function App() {
                   userName={userName}
                   idNo={idNo}
                   studentId={studentId}
+                  photo={photo}
+                  onLogout={handleLogout}
                 />
               : <Navigate to="/login" replace />
           }
