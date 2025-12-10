@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
-export default function Proof({ userName: propName, studentId: propId }) {
+export default function Proof({ userName: propName, studentId: propId, onLogout }) {
   const navigate = useNavigate();
 
   const userName  = propName   || localStorage.getItem('authUser')     || '';
@@ -29,7 +29,11 @@ export default function Proof({ userName: propName, studentId: propId }) {
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
-      <Header userName={userName} studentId={studentId} />
+      <Header
+        userName={userName}
+        studentId={studentId}
+        onLogout={onLogout}
+      />
 
       <main className="flex-1 p-4">
         {/* 學號 & 姓名 */}
