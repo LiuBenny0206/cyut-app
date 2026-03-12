@@ -15,8 +15,7 @@ import calendarIcon     from '../assets/images/calendar.png';
 import schoolIcon       from '../assets/images/campus.png';
 import careIcon         from '../assets/images/medical-book.png';
 
-export default function Home() {
-  const userName = localStorage.getItem('authUser') || '';
+export default function Home({ userName = '', studentId = '', onLogout }) {
   const navigate = useNavigate();
 
   const menuItems = [
@@ -68,7 +67,11 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
-      <Header userName={userName} />
+      <Header
+        userName={userName || localStorage.getItem('authUser') || ''}
+        studentId={studentId || localStorage.getItem('authSchoolId') || ''}
+        onLogout={onLogout}
+      />
 
       <main className="p-2 flex-1">
         <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
