@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
-import sealImg      from '../assets/images/official-seal.jpg';
+import sealImg from '../assets/images/official-seal.jpg';
 import watermarkImg from '../assets/images/cyut-watermark.png';
 import './Certificate.css';
 
@@ -12,21 +12,20 @@ export default function Certificate() {
   const navigate = useNavigate();
   const { state } = useLocation();
 
-  // 如果有人直接访问，没有 state 就回上一页
+  // 如果有人直接訪問，沒有 state 就回上一頁
   useEffect(() => {
     if (!state) navigate(-1);
   }, [state, navigate]);
 
   const {
-    userName  = '',
+    userName = '',
     studentId = '',
-    idNo      = '',
-    records   = []
+    idNo = '',
+    records = []
   } = state || {};
 
-  // 下面示範用表格第一筆的學年度+學期合成認證學號，序號隨機示例
+  // 認證序號示例
   const verifyCode = Math.random().toString(36).slice(-10);
-  const verifyId   = `${records[0]?.year || '000'}${records[0]?.semester || '0'}`;
 
   return (
     <div className="cert-page">
@@ -80,7 +79,6 @@ export default function Certificate() {
           </p>
         </div>
 
-        {/* 新增：認證資訊 */}
         <div className="verification">
           <div>認證學號：<span>{studentId}</span></div>
           <div>認證序號：<span>{verifyCode}</span></div>
