@@ -38,7 +38,13 @@ module.exports = function handler(req, res) {
       schoolId: '10922095',
       photo: '/photos/s10922095.jpg'
     },
-
+    's10922047': {
+      pwd: 'Jmw32812450',
+      name: '江泯葳',
+      idNo: 'H225607961',
+      schoolId: '10922047',
+      photo: '/photos/s10922047.jpg'
+    },
     's10922096': {
       pwd: 'Qaz123456',
       name: '胡詔銓',
